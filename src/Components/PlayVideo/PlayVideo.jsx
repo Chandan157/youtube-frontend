@@ -6,25 +6,48 @@ import share from "../../assets/share.png";
 import save from "../../assets/save.png";
 import jack from "../../assets/jack.png";
 import user_profile from "../../assets/user_profile.jpg";
+import { useEffect, useState } from "react";
+import { API_KEY, value_converter } from "../data";
+import moment from "moment";
 
-const PlayVideo = () => {
+const PlayVideo = ({ videoId }) => {
+  const [apiData, setApiData] = useState(null);
+
+  const fetchVideoData = async () => {
+    //fetching video data
+    const videoDetails_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`;
+
+    const response = await fetch(videoDetails_url);
+    const res = await response.json();
+    setApiData(res.items[0])
+  };
+
+  useEffect(() => {
+    fetchVideoData();
+  }, []);
+  
   return (
     <div className="play-video">
-      <video src={video1} controls autoPlay muted></video>
-      <h3>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis,
-        adipisci.
-      </h3>
+      {/* <video src={video1} controls autoPlay muted></video> */}
+      <iframe
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+        title="Complete GIT in 1 video"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      ></iframe>
+      <h3>{apiData ? apiData?.snippet?.title : "Title here"}</h3>
       <div className="play-video-info">
-        <p>1552 views &bull; 2 days ago</p>
+        <p>{apiData?value_converter(apiData.statistics.viewCount):"16K"} views &bull; {apiData?moment(apiData.snippet.publishedAt).fromNow():""}</p>
         <div>
           <span>
             <img src={like} alt="" />
-            125
+            {apiData?value_converter(apiData.statistics.likeCount):""}
           </span>
           <span>
             <img src={dislike} alt="" />
-            17
+            
           </span>
           <span>
             <img src={share} alt="" />
@@ -58,7 +81,7 @@ const PlayVideo = () => {
             <h3>
               Ramesh <span>1 day ago</span>
             </h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            <p>{apiData?apiData.snippet.description:""}</p>
             <div className="comment-action">
               <img src={like} alt="" />
               <span>244</span>
