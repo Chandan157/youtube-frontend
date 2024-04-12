@@ -14,6 +14,7 @@ import moment from "moment";
 
 const Feed = ({category}) => {
   const[data,setData] = useState([])
+  const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
 
   const fetchData=async()=>{
     const videoList_url=`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=70&regionCode=IN&videoCategoryId=${category}&key=${API_KEY}`
