@@ -7,11 +7,13 @@ import save from "../../assets/save.png";
 // import jack from "../../assets/jack.png";
 // import user_profile from "../../assets/user_profile.jpg";
 import { useEffect, useState } from "react";
-import { API_KEY, value_converter } from "../data";
+import { value_converter } from "../data";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 
+
 const PlayVideo = () => {
+  const API_KEY  = import.meta.env.VITE_YOUTUBE_API_KEY
   const {videoId}=useParams();
   const [apiData, setApiData] = useState(null);
   const [channelData, setChannelData] = useState(null);

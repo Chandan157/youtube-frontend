@@ -8,7 +8,7 @@ import "./Feed.css";
 // import thumbnail7 from "../../assets/thumbnail7.png";
 // import thumbnail8 from "../../assets/thumbnail8.png";
 import { Link } from "react-router-dom";
-import { API_KEY,value_converter } from "../data";
+import {value_converter } from "../data";
 import { useEffect,useState } from "react";
 import moment from "moment";
 

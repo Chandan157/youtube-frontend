@@ -8,11 +8,12 @@ import "./Recommended.css";
 // import thumbnail7 from '../../assets/thumbnail7.png';
 // import thumbnail8 from '../../assets/thumbnail8.png';
 import { useEffect, useState } from "react";
-import { API_KEY, value_converter } from "../data";
+import {value_converter } from "../data";
 import { Link } from "react-router-dom";
 
 const Recommended = ({ categoryId }) => {
   const [apiData, setApiData] = useState([]);
+  const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
 
   const fetchData = async () => {
     const relatedVideo_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=35&regionCode=IN&videoCategoryId=${categoryId}&key=${API_KEY}`;
